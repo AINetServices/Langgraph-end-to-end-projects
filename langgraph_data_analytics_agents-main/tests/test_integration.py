@@ -30,7 +30,7 @@ class TestAgentIntegration(unittest.TestCase):
         except Exception as e:
             self.fail(f"Failed to read sample CSV: {e}")
     
-    @patch.dict(os.environ, {'OPENAI_API_KEY': 'test-key'})
+    @patch.dict(os.environ, {'GROQ_API_KEY': 'test-key'})
     def test_graph_builder_imports(self):
         """Test that graph builder can import all dependencies"""
         try:

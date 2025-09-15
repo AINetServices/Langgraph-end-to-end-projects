@@ -21,6 +21,7 @@ from agents.pandas_agent import PandasAgent, df_manager
 from agents.memory_agent import ConversationMemoryAgent, ChatResponseFormatter
 from agents.query_context_agent import QueryContextAgent
 from langchain_openai import ChatOpenAI
+from langchain_groq import ChatGroq
 
 # Define the state for our graph using TypedDict for more structure
 class DataAnalyticsState(TypedDict):
@@ -42,14 +43,18 @@ class DataAnalyticsState(TypedDict):
 
 # Initialize LLM
 try:
-    llm = ChatOpenAI(temperature=0)
+    llm = ChatGroq(
+        temperature=0,
+        model_name="mixtral-8x7b-32768",  # or "llama3-70b-8192", "gemma-7b-it", etc.
+        groq_api_key=os.environ.get('GROQ_API_KEY')
+    )
     if llm is None:
         raise ValueError("LLM initialization returned None")
 except Exception as e:
     # For testing purposes, provide a fallback
     import os
-    if not os.getenv("OPENAI_API_KEY"):
-        print("Warning: OPENAI_API_KEY not set. Using mock LLM for testing.")
+    if not os.getenv("GROQ_API_KEY"):
+        print("Warning: GROQ_API_KEY not set. Using mock LLM for testing.")
         # Create a mock LLM for testing - this should be replaced in production
         class MockLLM:
             def invoke(self, prompt):

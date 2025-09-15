@@ -886,8 +886,13 @@ Generate ONLY the Python code, no explanations. Make it intelligent and adaptive
 
         # Get the LLM to generate the code
         from langchain_openai import ChatOpenAI
+        from langchain_groq import ChatGroq
         import os
-        llm = ChatOpenAI(temperature=0, model='gpt-4o-mini', api_key=os.environ.get('OPENAI_API_KEY'))
+        llm = ChatGroq(
+        temperature=0,
+        model_name="mixtral-8x7b-32768",  # or "llama3-70b-8192", "gemma-7b-it", etc.
+        groq_api_key=os.environ.get('GROQ_API_KEY')
+    )
         
         code_response = llm.invoke(code_generation_prompt)
         generated_code = code_response.content if hasattr(code_response, 'content') else str(code_response)

@@ -1,5 +1,6 @@
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
+from langchain_groq import ChatGroq
 import ast
 from typing import Dict, Any, TypedDict, List
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage

@@ -1,5 +1,6 @@
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
+from langchain_groq import ChatGroq
 from langchain.tools import tool
 from typing import Dict, Any, List
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
@@ -395,9 +396,14 @@ def expand_query_context(query: str) -> str:
         
         # Create a temporary QueryContextAgent for this analysis
         from langchain_openai import ChatOpenAI
+        from langchain_groq import ChatGroq
         import os
         
-        llm = ChatOpenAI(temperature=0, model='gpt-4o-mini', api_key=os.environ.get('OPENAI_API_KEY'))
+        llm = ChatGroq(
+        temperature=0,
+        model_name="mixtral-8x7b-32768",  # or "llama3-70b-8192", "gemma-7b-it", etc.
+        groq_api_key=os.environ.get('GROQ_API_KEY')
+    )
         context_agent = QueryContextAgent(llm)
         
         # Analyze the query
